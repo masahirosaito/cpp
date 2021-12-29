@@ -1,62 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// 1人のテストの点数を表す配列から合計点を計算して返す関数
-// 引数 scores: scores.at(i)にi番目のテストの点数が入っている
-// 返り値: 1人のテストの合計点
-int sum(vector<int> scores)
-{
-    int total = 0;
-    for (int i = 0; i < scores.size(); i++)
-    {
-        total += scores.at(i);
-    }
-    return total;
+// x番の組織が親組織に提出する枚数を返す
+// childrenは組織の関係を表す2次元配列(参照渡し)
+int count_report_num(vector<vector<int>> &children, int x) {
+  // (ここに追記して再帰関数を実装する)
+
+  
 }
 
-// 3人の合計点からプレゼントの予算を計算して出力する関数
-// 引数 sum_a: A君のテストの合計点
-// 引数 sum_b: B君のテストの合計点
-// 引数 sum_c: C君のテストの合計点
-// 返り値: なし
-void output(int sum_a, int sum_b, int sum_c)
-{
-    cout << sum_a * sum_b * sum_c << endl;
-}
+// これ以降の行は変更しなくてよい
 
-// -------------------
-// ここから先は変更しない
-// -------------------
+int main() {
+  int N;
+  cin >> N;
 
-// N個の入力を受け取って配列に入れて返す関数
-// 引数 N: 入力を受け取る個数
-// 返り値: 受け取ったN個の入力の配列
-vector<int> input(int N)
-{
-    vector<int> vec(N);
-    for (int i = 0; i < N; i++)
-    {
-        cin >> vec.at(i);
-    }
-    return vec;
-}
+  vector<int> p(N);  // 各組織の親組織を示す配列
+  p.at(0) = -1;  // 0番組織の親組織は存在しないので-1を入れておく
+  for (int i = 1; i < N; i++) {
+    cin >> p.at(i);
+  }
 
-int main()
-{
-    // 科目の数Nを受け取る
-    int N;
-    cin >> N;
+  // 組織の関係から2次元配列を作る
+  vector<vector<int>> children(N);  // ある組織の子組織の番号一覧
+  for (int i = 1; i < N; i++) {
+    int parent = p.at(i);  // i番の親組織の番号
+    children.at(parent).push_back(i);  // parentの子組織一覧にi番を追加
+  }
 
-    // それぞれのテストの点数を受け取る
-    vector<int> A = input(N);
-    vector<int> B = input(N);
-    vector<int> C = input(N);
-
-    // それぞれの合計点を計算
-    int sum_A = sum(A);
-    int sum_B = sum(B);
-    int sum_C = sum(C);
-
-    // プレゼントの予算を出力
-    output(sum_A, sum_B, sum_C);
+  // 各組織について、答えを出力
+  for (int i = 0; i < N; i++) {
+    cout << count_report_num(children, i) << endl;
+  }
 }

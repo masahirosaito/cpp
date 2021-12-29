@@ -475,4 +475,100 @@ void hello() {
 - 引数の型や引数の数に応じて、呼び出される関数が変わる。
 
 # 2. 複雑な計算処理の書き方
-##
+## 範囲for文
+```cpp
+for (配列の要素の型 変数名 : 配列変数) {
+  // 各要素に対する処理
+}
+```
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+  vector<int> a = {1, 3, 2, 5};
+  for (int x : a) {
+    cout << x << endl;
+  }
+}
+```
+
+## 2次元配列
+### 宣言と入力
+```cpp
+vector<vector<要素の型>> 変数名(要素数1, vector<要素の型>(要素数2, 初期値));
+vector<vector<要素の型>> 変数名(要素数1, vector<要素の型>(要素数2)); 
+```
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int main() {
+ 
+  // int型の2次元配列(3×4要素の)の宣言
+  vector<vector<int>> data(3, vector<int>(4));
+ 
+  // 入力 (2重ループを用いる)
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 4; j++) {
+      cin >> data.at(i).at(j);
+    }
+  }
+
+  // 2次元配列の初期化
+  vector<vector<int>> data1 = {
+    {7, 4, 0, 8},
+    {2, 0, 3, 5},
+    {6, 1, 7, 0}
+  };
+}
+```
+
+### アクセス
+```cpp
+変数名.at(上から何番目か).at(左から何番目か)
+```
+
+### 大きさの取得
+```cpp
+vector<vector<int>> data(3, vector<int>(4));
+
+data.size();  // 3 (縦の要素数) (12ではないことに注意!)
+data.at(0).size();  // 4 (横の要素数)
+```
+
+## 参照
+### 参照の宣言
+```cpp
+参照先の型 &参照の名前 = 参照先;
+```
+```cpp
+int a = 123;
+int &b = a;  // int型変数aへの参照
+
+string s = "apg4b";
+string &t = s;  // string型変数sへの参照
+
+vector<int> v = {1, 2, 3, 4, 5};
+vector<int> &w = v;  // vector<int>型変数vへの参照
+
+int &c;  // 参照先が指定されていないためコンパイルエラーになる
+```
+
+### 参照渡し
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int g(int &x) {
+  x = x * 2;  // xを2倍 (参照によって"呼び出す側の変数"が変更される)
+  return x;
+}
+
+int main() {
+  int a = 3;  // 関数を呼び出す側の変数
+  int b = g(a);  // xの参照先がaになる
+  cout << "a: " << a << endl; // 6
+  cout << "b: " << b << endl; // 6
+}
+```
